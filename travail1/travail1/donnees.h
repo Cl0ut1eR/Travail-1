@@ -12,7 +12,7 @@ class Donnees
 	private:
 
 		void CreerCartes();
-
+		int CartesEnMain;
 
 	public:
 		
@@ -21,11 +21,12 @@ class Donnees
 
 		Joueur* TabDesJoueurs[NombreDeJoueurs];
 		Carte* TabDesCartes[52];
+		
 
-
+		int GetCartesEnMain();
 		int GetNombreDeJoueurs();
 		void MelangerCartes();
-
+		void SetCartesEnMain(int NombreDeCartes);
 
 
 };

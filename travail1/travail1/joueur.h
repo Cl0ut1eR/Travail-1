@@ -21,19 +21,16 @@ private:
 public:
 
 	Joueur();
-	Joueur(string nom, int nombreVictoires = 0, int nombreDefaites= 0);
+	Joueur(string nom, int nombreVictoires, int nombreDefaites);
 
 
 	string getNom() const;
 	int getVictoires() const;
 	int getDefaites() const;
-
+	Carte* GetCarte(int Position);
 	void setNom(string Nom);
-
 	void UpdatePointage(bool Victoire);
-
 	void AjouterUneCarte(Carte* Carte);
-
 	void RetirerCartes();
 	
 

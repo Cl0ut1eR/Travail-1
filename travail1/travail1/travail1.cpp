@@ -9,8 +9,13 @@ using namespace std;
 
 Donnees leJeu;
 
+
 void InitialiserJoueurs();
 void Jouer();
+void DeciderNombreDeCartes();
+void AttribuerCartes();
+void AfficherCarte(Carte* uneCarte);
+void AfficherJoueur(Joueur* unJoueur);
 
 int main() 
 {
@@ -28,31 +33,74 @@ int main()
 
 void Jouer() 
 {
-	int NombreDeCartesVoulue = -1;
-	while (NombreDeCartesVoulue < (52/leJeu.GetNombreDeJoueurs) && NombreDeCartesVoulue < 0)
+	
+	DeciderNombreDeCartes();
+	leJeu.MelangerCartes();
+	AttribuerCartes();
+	for(int i=0;i<leJeu.GetNombreDeJoueurs();i++)
 	{
-		cout << "\nCombien de cartes voulez vous? \nMaximum " + std::to_string(52 / leJeu.GetNombreDeJoueurs());
-		try
+		AfficherJoueur(leJeu.TabDesJoueurs[i]);
+	}
+}
+
+void AfficherJoueur(Joueur* unJoueur)
+{
+	int TotalPionts = 0;
+	cout << "\n\nMain de " + unJoueur->getNom()+"\n";
+	for (int i = 0; i < leJeu.GetCartesEnMain(); i++)
+	{
+		AfficherCarte(unJoueur->GetCarte(i));
+		TotalPionts += unJoueur->GetCarte(i)->GetValeur();
+	}
+}
+
+void AfficherCarte(Carte* uneCarte)
+{
+	cout << "\t"+std::to_string(uneCarte->GetValeur()) + "\t" + uneCarte->GetAtout();
+}
+
+void AttribuerCartes()
+{
+	int NombreDeCartesUtilisee = 0;
+	for (int i = 0; i < leJeu.GetNombreDeJoueurs(); i++)
+	{
+		for(int j = 0; j < leJeu.GetCartesEnMain(); j++)
 		{
-			cin >> NombreDeCartesVoulue;
-		}
-		catch (const std::exception&)
-		{
-			cout << "\nVous devez entrer un nombre";
+			leJeu.TabDesJoueurs[i]->AjouterUneCarte(leJeu.TabDesCartes[NombreDeCartesUtilisee]);
+			NombreDeCartesUtilisee++;
 		}
 	}
 
+}
 
+void DeciderNombreDeCartes()
+{
+	int NombreDeCartesVoulue = -1;
 
+	cout << "\nCombien de cartes voulez vous? \nMaximum " + std::to_string(52 / leJeu.GetNombreDeJoueurs())+"\n";
+	while (!(std::cin>> NombreDeCartesVoulue) || (NombreDeCartesVoulue > (52 / leJeu.GetNombreDeJoueurs()) || NombreDeCartesVoulue < 0))
+	{
+		
+		if (std::cin.fail())
+		{
+			cout << "\nVous devez entrer un nombre";
+			std::cin.clear();
+			std::cin.ignore(2000, '\n');
+		}
+		cout << "\nCombien de cartes voulez vous? \nMaximum " + std::to_string(52 / leJeu.GetNombreDeJoueurs())+"\n";
+		
+	}
+	leJeu.SetCartesEnMain(NombreDeCartesVoulue);
 }
 
 void InitialiserJoueurs()
 {
-	string NomTempo;
+	std::string NomTempo="";
 	for (int i = 0; i < leJeu.GetNombreDeJoueurs(); i++)
 	{
-		cout << "\nNom du joueur " + std::to_string(i+1);
+		cout << "\nNom du joueur " + std::to_string(i+1)+" ";
 		cin >> NomTempo;
+		leJeu.TabDesJoueurs[i] = new Joueur;
 		leJeu.TabDesJoueurs[i]->setNom(NomTempo);
 	}
 }

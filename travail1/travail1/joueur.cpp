@@ -39,6 +39,10 @@ int Joueur::getDefaites() const
 {
 	return nombreDefaites;
 }
+Carte* Joueur::GetCarte(int Position)
+{
+	return mainDuJoueur[Position];
+}
 
 #pragma endregion
 
@@ -66,6 +70,7 @@ void Joueur::AjouterUneCarte(Carte* inCarte)
 	if (nombreDeCartesEnMain < 26)
 	{
 		mainDuJoueur[nombreDeCartesEnMain] = inCarte;
+		nombreDeCartesEnMain++;
 	}
 }
 
@@ -74,6 +79,7 @@ void Joueur::RetirerCartes()
 	for (int i = 0; i < nombreDeCartesEnMain; i++)
 	{
 		mainDuJoueur[i] = NULL;
+		nombreDeCartesEnMain--;
 	}
 }
 
