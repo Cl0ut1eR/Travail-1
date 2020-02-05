@@ -8,13 +8,13 @@
 using namespace std;
 
 Donnees leJeu;
-
+CONSOLE_SCREEN_BUFFER_INFO ScreenInfo;
 
 void InitialiserJoueurs();
 void Jouer();
 void DeciderNombreDeCartes();
 void AttribuerCartes();
-void AfficherCarte(Carte* uneCarte);
+void AfficherCarte(Carte* uneCarte,int position);
 void AfficherJoueur(Joueur* unJoueur);
 
 int main() 
@@ -45,18 +45,56 @@ void Jouer()
 
 void AfficherJoueur(Joueur* unJoueur)
 {
+	int CarteAffichee = 0;
 	int TotalPionts = 0;
 	cout << "\n\nMain de " + unJoueur->getNom()+"\n";
 	for (int i = 0; i < leJeu.GetCartesEnMain(); i++)
 	{
-		AfficherCarte(unJoueur->GetCarte(i));
+		AfficherCarte(unJoueur->GetCarte(i),i);
 		TotalPionts += unJoueur->GetCarte(i)->GetValeur();
+		CarteAffichee++;
+		if (CarteAffichee == 3)
+		{
+			cout << "\n";
+			CarteAffichee = 0;
+		}
 	}
+	
+	cout <<"\n\t"<< unJoueur->getNom()<< " a " << TotalPionts << " points\n";
 }
 
-void AfficherCarte(Carte* uneCarte)
+void AfficherCarte(Carte* uneCarte,int inPosition = 0)
 {
-	cout << "\t"+std::to_string(uneCarte->GetValeur()) + "\t" + uneCarte->GetAtout();
+
+	/*switch (inPosition)
+	{
+	case 0:
+		Gotoxy(15, ScreenInfo.dwCursorPosition.Y);
+		break;
+	case 1:
+		Gotoxy(25, ScreenInfo.dwCursorPosition.Y);
+		break;
+	case 2:
+		Gotoxy(35, ScreenInfo.dwCursorPosition.Y);
+		break;
+	}*/
+
+	cout << "\t"<<std::to_string(uneCarte->GetValeur());
+
+	/*switch (inPosition)
+	{
+	case 0:
+		Gotoxy(17, ScreenInfo.dwCursorPosition.Y);
+		break;
+	case 1:
+		Gotoxy(27, ScreenInfo.dwCursorPosition.Y);
+		break;
+	case 2:
+		Gotoxy(37, ScreenInfo.dwCursorPosition.Y);
+		break;
+	}*/
+
+	cout<<"\t"<<uneCarte->GetAtout();
 }
 
 void AttribuerCartes()

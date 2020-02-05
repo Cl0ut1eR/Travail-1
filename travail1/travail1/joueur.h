@@ -16,6 +16,7 @@ private:
 	int nombreDefaites;
 	Carte* mainDuJoueur[maxCartesAJouer];
 	int nombreDeCartesEnMain;
+	
 
 
 public:
