@@ -15,6 +15,7 @@ private:
 	int nombrevictoires;
 	int nombreDefaites;
 	Carte* mainDuJoueur[maxCartesAJouer];
+	int nombreDeCartesEnMain;
 
 
 public:
@@ -29,9 +30,11 @@ public:
 
 	void setNom(string Nom);
 
-	void Pointage(bool Victoire);
+	void UpdatePointage(bool Victoire);
 
+	void AjouterUneCarte(Carte* Carte);
 
+	void RetirerCartes();
 	
 
 
