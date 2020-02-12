@@ -19,14 +19,15 @@ void Jouer();
 void DeciderNombreDeCartes();
 void AttribuerCartes();
 void AfficherCarte(Carte* uneCarte);
-void AfficherJoueur(Joueur* unJoueur , int PointageGagnant);
-int TrouverGagnants();
+void AfficherJoueur(Joueur* unJoueur , std::vector<std::string> nomGagnant);
+void AfficherGagnants(std::vector<std::string> nomGagnant);
+std::vector<std::string> TrouverGagnants();
 int main() 
 {
-	srand(time(NULL));
+	TextColor(White);
+	srand(unsigned(time(NULL)));
 
 	char fini = 'n';
-	srand((unsigned)time(NULL));
 	InitialiserJoueurs();
 	while (fini=='n' || fini=='N')
 	{
@@ -44,7 +45,7 @@ void Jouer()
 	DeciderNombreDeCartes();
 	leJeu.MelangerCartes();
 	AttribuerCartes();
-	int PointageGagnant = TrouverGagnants();
+	std::vector<std::string> nomGagnant = TrouverGagnants();
 	Texte.YActuel=0;
 	Gotoxy(0, Texte.YActuel);
 	ClrScr();
@@ -53,8 +54,9 @@ void Jouer()
 	Gotoxy(Texte.XDefault, Texte.YActuel);
 	for(int i=0;i<leJeu.GetNombreDeJoueurs();i++)
 	{
-		AfficherJoueur(leJeu.TabDesJoueurs[i], PointageGagnant);
+		AfficherJoueur(leJeu.TabDesJoueurs[i], nomGagnant);
 	}
+	AfficherGagnants(nomGagnant);
 }
 
 
@@ -88,9 +90,10 @@ short AskNombreJoueurs()
 	return NombreDeJoueurs2;
 }
 
-int TrouverGagnants()
+std::vector<std::string> TrouverGagnants()
 {
 	int PointageMax = -1;
+	std::vector<std::string> TabGagnant;
 	for (int i = 0; i < leJeu.GetNombreDeJoueurs(); i++)
 	{
 		if (leJeu.TabDesJoueurs[i]->GetPointageDeLaMain() > PointageMax)
@@ -98,25 +101,62 @@ int TrouverGagnants()
 			PointageMax = leJeu.TabDesJoueurs[i]->GetPointageDeLaMain();
 		}
 	}
-	return PointageMax;
+	for (int i = 0; i < leJeu.GetNombreDeJoueurs(); i++)
+	{
+		if (leJeu.TabDesJoueurs[i]->GetPointageDeLaMain() == PointageMax)
+		{
+			TabGagnant.push_back(leJeu.TabDesJoueurs[i]->getNom());
+		}
+	}
+	return TabGagnant;
 }
 
-
-
-void AfficherJoueur(Joueur* unJoueur, int PointageGagnant)
+void AfficherGagnants(std::vector<std::string> nomGagnant)
 {
-	if (unJoueur->GetPointageDeLaMain() == PointageGagnant)
+	TextColor(Green);
+	Texte.YActuel ++;
+	Gotoxy(Texte.XDefault, Texte.YActuel);
+	if (nomGagnant.size() == 1)
 	{
-		TextColor(Green);
+		cout << "Le gagnant est :";
+	}
+	else
+	{
+		cout << "Les gagnants sont :";
+	}
+	Gotoxy(Texte.XDefault + 19, Texte.YActuel);
+	for (int i = 0; i < nomGagnant.size(); i++)
+	{
+		cout << nomGagnant[i];
+		Gotoxy(Texte.XDefault =+8, Texte.YActuel);
+	}
+	TextColor(White);
+}
+
+void AfficherJoueur(Joueur* unJoueur, std::vector<std::string> nomGagnant)
+{
+	TextColor(White);
+	for (int i = 0; i < nomGagnant.size(); i++)
+	{
+		if (unJoueur->getNom() == nomGagnant[i])
+		{
+			TextColor(Green);
+		}
 	}
 	int CarteAffichee = 0;
-	Gotoxy(Texte.XDefault, Texte.YActuel);
+	Gotoxy(Texte.XDefault-2, Texte.YActuel);
 	cout << "Main de " << unJoueur->getNom();
 	Texte.YActuel++;
-	Gotoxy(Texte.XDefault, Texte.YActuel);
+	Texte.XRendu = Texte.XDefault;
+	Gotoxy(Texte.XRendu, Texte.YActuel);
 	for (int i = 0; i < leJeu.GetCartesEnMain(); i++)
 	{
-
+		if (CarteAffichee == 0)
+		{
+			Texte.YActuel++;
+			Texte.XRendu = Texte.XDefault;
+			Gotoxy(Texte.XDefault, Texte.YActuel);
+		}
 		AfficherCarte(unJoueur->GetCarte(i));
 		Texte.XRendu += 12;
 		Gotoxy(Texte.XRendu, Texte.YActuel);
@@ -124,9 +164,6 @@ void AfficherJoueur(Joueur* unJoueur, int PointageGagnant)
 		if (CarteAffichee == 4)
 		{
 			CarteAffichee = 0;
-			Texte.YActuel++;
-			Texte.XRendu = Texte.XDefault;
-			Gotoxy(Texte.XDefault, Texte.YActuel);
 		}
 	}
 	Texte.YActuel++;

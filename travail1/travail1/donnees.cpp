@@ -49,8 +49,7 @@ void Donnees::SetCartesEnMain(int inNombreDeCartes)
 }
 
 void Donnees::MelangerCartes()
-{
-		Carte* CarteTempo = NULL;
+{	Carte* CarteTempo = NULL;
 	int Case1 = 0;
 	int Case2 = 0;
 	for (int i = 0; i < 500; i++)
