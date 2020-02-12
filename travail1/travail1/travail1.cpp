@@ -163,6 +163,7 @@ void AfficherJoueur(Joueur* unJoueur, std::vector<std::string> nomGagnant)
 		CarteAffichee++;
 		if (CarteAffichee == 4)
 		{
+
 			CarteAffichee = 0;
 		}
 	}

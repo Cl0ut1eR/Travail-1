@@ -7,6 +7,7 @@
 const short maxCartes = 52;
 
 
+
 class Donnees
 {
 	

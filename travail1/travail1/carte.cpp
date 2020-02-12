@@ -4,6 +4,7 @@ Carte::Carte()
 {
   valeur = 0;
   atout = "";
+
 }
 void Carte::InitialiserCarte(int inValeur, string inAtout)
 {

@@ -18,7 +18,6 @@ private:
 	int nombreDeCartesEnMain;
 	
 
-
 public:
 
 	Joueur();

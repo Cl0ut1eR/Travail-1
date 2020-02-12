@@ -6,6 +6,8 @@
 #include"donnees.h"
 
 
+
+
 using namespace std;
 
 class ClassText

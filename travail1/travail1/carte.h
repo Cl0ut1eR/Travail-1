@@ -6,8 +6,10 @@ using namespace std;
 #include <iostream>
 using namespace std;
 
+
 #ifndef carteH
 #define carteH
+
 
 class Carte
 {

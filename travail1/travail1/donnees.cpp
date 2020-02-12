@@ -35,6 +35,7 @@ const int Donnees::GetNombreDeJoueurs() const
 int Donnees::GetNombreDeCartes()
 {
 	return maxCartes;
+
 }
 
 

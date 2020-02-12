@@ -1,6 +1,7 @@
 #include "joueur.h"
 Joueur::Joueur()
 {
+
 	nom = "";
 	nombrevictoires = 0;
 	nombreDefaites = 0;

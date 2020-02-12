@@ -8,6 +8,7 @@ ClassText::ClassText()
 	XDefault = 10;
 	YActuel = 0;
 	XRendu = 0;
+
 }
 
 void ClassText::UpdateScores(Donnees *leJeu)
