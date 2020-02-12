@@ -4,6 +4,8 @@ Joueur::Joueur()
 	nom = "";
 	nombrevictoires = 0;
 	nombreDefaites = 0;
+	nombreDeCartesEnMain = 0;
+
 	for (int i = 0; i < maxCartesAJouer;i++)
 	{
 		mainDuJoueur[i] = NULL;
@@ -15,6 +17,7 @@ Joueur::Joueur(string inNom, int inNombreVictoires = 0, int inNombreDefaites = 0
 	nom = inNom;
 	nombrevictoires= inNombreVictoires;
 	nombreDefaites = inNombreDefaites;
+	nombreDeCartesEnMain = 0;
 	for (int i = 0; i < maxCartesAJouer; i++)
 	{
 		mainDuJoueur[i] = NULL;
@@ -36,6 +39,27 @@ int Joueur::getDefaites() const
 {
 	return nombreDefaites;
 }
+Carte* Joueur::GetCarte(int Position)
+{
+	return mainDuJoueur[Position];
+}
+
+int Joueur::GetPointageDeLaMain()
+{
+	int Pointage = 0;
+	for (int i = 0; i < maxCartesAJouer; i++)
+	{
+		if (mainDuJoueur[i] != NULL)
+		{
+			Pointage += mainDuJoueur[i]->GetValeur();
+		}
+		else 
+		{
+			i = maxCartesAJouer;//break
+		}
+	}
+	return Pointage;
+}
 
 #pragma endregion
 
@@ -46,7 +70,7 @@ void Joueur::setNom(string inNom)
 	nom = inNom;
 }
 
-void Joueur::Pointage(bool inVictoire)
+void Joueur::UpdatePointage(bool inVictoire)
 {
 	if (inVictoire)
 	{
@@ -55,6 +79,25 @@ void Joueur::Pointage(bool inVictoire)
 	else 
 	{
 		nombreDefaites++;
+	}
+}
+
+void Joueur::AjouterUneCarte(Carte* inCarte)
+{
+	if (nombreDeCartesEnMain < 26)
+	{
+		mainDuJoueur[nombreDeCartesEnMain] = inCarte;
+		nombreDeCartesEnMain++;
+	}
+}
+
+
+void Joueur::RetirerCartes()
+{
+	for (int i = 0; i < nombreDeCartesEnMain; i++)
+	{
+		mainDuJoueur[i] = NULL;
+		nombreDeCartesEnMain--;
 	}
 }
 
