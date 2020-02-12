@@ -1,5 +1,8 @@
+#pragma once
 #include <string>
 #include "carte.h"
+#include "donnees.h"
+
 using namespace std;
 
 #ifndef JoueurH
@@ -30,7 +33,7 @@ public:
 	Carte* GetCarte(int Position);
 	void setNom(string Nom);
 	void UpdatePointage(bool Victoire);
-	void AjouterUneCarte(Carte* Carte);
+	void AjouterUneCarte(Carte* Carte ,Donnees* leJeu);
 	void RetirerCartes();
 	int GetPointageDeLaMain();
 	

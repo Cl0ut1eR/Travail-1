@@ -36,6 +36,11 @@ int main()
 		cin >> fini;	
 
 	}
+	ClrScr();
+	Texte.YActuel = 3;
+	Gotoxy(30, Texte.YActuel);
+	cout << "";
+	return 1;
 }
 
 
@@ -46,6 +51,7 @@ void Jouer()
 	leJeu.MelangerCartes();
 	AttribuerCartes();
 	std::vector<std::string> nomGagnant = TrouverGagnants();
+	Texte.UpdateScores(&leJeu);
 	Texte.YActuel=0;
 	Gotoxy(0, Texte.YActuel);
 	ClrScr();
@@ -106,7 +112,13 @@ std::vector<std::string> TrouverGagnants()
 		if (leJeu.TabDesJoueurs[i]->GetPointageDeLaMain() == PointageMax)
 		{
 			TabGagnant.push_back(leJeu.TabDesJoueurs[i]->getNom());
+			leJeu.TabDesJoueurs[i]->UpdatePointage(1);
 		}
+		else
+		{
+			leJeu.TabDesJoueurs[i]->UpdatePointage(0);
+		}
+
 	}
 	return TabGagnant;
 }
@@ -186,9 +198,10 @@ void AttribuerCartes()
 	int NombreDeCartesUtilisee = 0;
 	for (int i = 0; i < leJeu.GetNombreDeJoueurs(); i++)
 	{
+		leJeu.TabDesJoueurs[i]->RetirerCartes();
 		for(int j = 0; j < leJeu.GetCartesEnMain(); j++)
 		{
-			leJeu.TabDesJoueurs[i]->AjouterUneCarte(leJeu.TabDesCartes[NombreDeCartesUtilisee]);
+			leJeu.TabDesJoueurs[i]->AjouterUneCarte(leJeu.TabDesCartes[NombreDeCartesUtilisee],&leJeu);
 			NombreDeCartesUtilisee++;
 		}
 	}

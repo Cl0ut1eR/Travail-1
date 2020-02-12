@@ -1,4 +1,7 @@
+#pragma once
 #include "joueur.h"
+#include"donnees.h"
+
 Joueur::Joueur()
 {
 
@@ -83,9 +86,9 @@ void Joueur::UpdatePointage(bool inVictoire)
 	}
 }
 
-void Joueur::AjouterUneCarte(Carte* inCarte)
+void Joueur::AjouterUneCarte(Carte* inCarte, Donnees* leJeu)
 {
-	if (nombreDeCartesEnMain < 26)
+	if (nombreDeCartesEnMain < leJeu->GetNombreDeCartes()/leJeu->GetNombreDeJoueurs())
 	{
 		mainDuJoueur[nombreDeCartesEnMain] = inCarte;
 		nombreDeCartesEnMain++;
@@ -100,6 +103,7 @@ void Joueur::RetirerCartes()
 		mainDuJoueur[i] = NULL;
 		nombreDeCartesEnMain--;
 	}
+	nombreDeCartesEnMain = 0;
 }
 
 #pragma endregion
