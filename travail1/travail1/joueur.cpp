@@ -86,9 +86,9 @@ void Joueur::UpdatePointage(bool inVictoire)
 	}
 }
 
-void Joueur::AjouterUneCarte(Carte* inCarte, Donnees* leJeu)
+void Joueur::AjouterUneCarte(Carte* inCarte/*, Donnees * leJeu*/)
 {
-	if (nombreDeCartesEnMain < leJeu->GetNombreDeCartes()/leJeu->GetNombreDeJoueurs())
+	if (nombreDeCartesEnMain < 26/*leJeu->GetNombreDeCartes()/leJeu->GetNombreDeJoueurs()*/)
 	{
 		mainDuJoueur[nombreDeCartesEnMain] = inCarte;
 		nombreDeCartesEnMain++;
